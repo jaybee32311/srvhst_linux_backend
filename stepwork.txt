@@ -1,0 +1,22 @@
+python -m venv venv
+
+PS D:\Work\Python\screen_api-master\venv\Scripts> .\activate
+
+pip install -r .\requirements.txt
+
+
+python manage.py createsuperuser
+(admin user)
+
+python manage.py runserver 192.168.112.47:8000
+
+
+python manage.py makemigrations
+
+For the vps , 
+Open Control panel-> windows Firewall-> Advance setting->Inbound Rules
+
+
+python manage.py runserver
+
+python manage.py migrate

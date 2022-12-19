@@ -1,0 +1,23 @@
+{% extends 'back/layout.html' %}
+{% load static %}
+
+
+
+{% block content %}
+{% if user.is_authenticated %}
+
+<div class="container text-center">
+    <div class="row ">
+        {% for image in images %}
+        <div class="col-md-4 col-sm-6 col-xs-6 col-lg-3">
+            <a class="nav-link one-block" href="{% url 'back:pcs' %}?mac={{ image.mac }}">
+                <img src="{% static 'image/pc.png' %}" style="width:100%" />
+                <div class="centered">{{ image.mac }}</div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% endblock content %}

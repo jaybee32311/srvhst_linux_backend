@@ -1,0 +1,80 @@
+{% extends 'back/layout_screen.html' %}
+{% load static %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+
+<div class="container text-center">
+
+    <div class="row row-cols-5">
+        
+            {% for image in images %}
+            <div class="col">
+                <div class="gallery">
+                    <img class="img-thumbnail " src="{{ image.img_data }}" alt="{{image.created}}" data-action="zoom">
+                    <div class="middle">
+                        <a >
+                            <img src="{% static 'image/delete.png' %}" class="delete_button" data-id="{{image.id}}">
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        
+
+        <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" data-dismiss="modal">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <img src="" class="imagepreview" style="width: 100%;">
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-xs-12">
+                            <p class="text-left">1. line of description<br>2. line of description <br>3. line of description</p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        window.setTimeout(function () {
+           location.reload()
+        }, 30000); // refresh/redirect after 30 seconds.
+        $('.delete_button').click(function () {
+            var item = $(this).parents('div.col')
+            $.ajax({
+                url: "http://192.168.112.47:8000/api/delete/",
+                method: 'POST', // or another (GET), whatever you need
+                data: {
+                    img_id: $(this).data("id")
+                },
+                success: function (data) {
+                    // success callback
+                    // you can process data returned by function from views.py
+                    item.remove()
+                },
+                error: function () {
+                    alert("There was an error")
+                }
+            });
+            
+
+        });
+    });
+</script>
+{% endif %}
+
+{% endblock content %}
